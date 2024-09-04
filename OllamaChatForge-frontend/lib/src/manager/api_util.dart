@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ApiUtil {
-  static const String baseUrl = 'http://192.168.1.15:8000';
+  static const String baseUrl = 'http://YourIP:8000';
 
   static Future<http.Response> postRequest(String endpoint, Map<String, dynamic> body) async {
     final url = Uri.parse('$baseUrl$endpoint');
