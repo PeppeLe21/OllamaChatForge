@@ -30,4 +30,4 @@ To run the back-end, you need to start the FastAPI server. Follow these steps:
    
    ```bash
    python -m uvicorn ollama_api:app --host 0.0.0.0 --port 8000 --reload
-This command will start the FastAPI server at 'http://0.0.0.0:8000'.
+This command will start the FastAPI server at http://0.0.0.0:8000.
