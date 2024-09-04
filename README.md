@@ -31,3 +31,14 @@ To run the back-end, you need to start the FastAPI server. Follow these steps:
    ```bash
    python -m uvicorn ollama_api:app --host 0.0.0.0 --port 8000 --reload
 This command will start the FastAPI server at http://0.0.0.0:8000.
+
+#### Important Note:
+
+To use the back-end APIs correctly, you need to modify the api_util.dart file in the front-end code:
+
+- Open api_util.dart
+- Go to line 5 and replace 'YourIP' with the IP address of your local machine.
+
+### Front-End Setup
+
+To run the front-end of the application, you can use an emulator or build an APK to install directly on an Android device.
