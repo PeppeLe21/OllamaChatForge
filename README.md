@@ -34,7 +34,7 @@ This command will start the FastAPI server at http://0.0.0.0:8000.
 
 #### Important Note:
 
-To use the back-end APIs correctly, you need to modify the api_util.dart file in the front-end code:
+To use the back-end APIs correctly, you need to modify the `api_util.dart` OR `api_util.dart` file in the front-end code:
 
 - Open api_util.dart
 - Go to line 5 and replace 'YourIP' with the IP address of your local machine.
