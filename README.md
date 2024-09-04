@@ -54,9 +54,8 @@ To run the front-end of the application, you can use an emulator or build an APK
 
 #### Building the APK
 
-If you want to build an APK to install directly on an Android device, use the following command:
-   
+1. If you want to build an APK to install directly on an Android device, use the following command: 
    ```bash
    flutter build apk --release
 
-This command will generate a release version of the APK in the build/app/outputs/flutter-apk/ directory, which you can then install on your Android device.
+This command will generate a release version of the APK in the build/app/outputs/flutter-apk/directory, which you can then install on your Android device.
