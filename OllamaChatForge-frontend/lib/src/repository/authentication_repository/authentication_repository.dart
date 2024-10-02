@@ -24,6 +24,8 @@ class AuthenticationRepository extends GetxController {
 
   User? get authUser => _auth.currentUser;
 
+  final _db = FirebaseFirestore.instance;
+
   @override
   void onReady() {
 
@@ -59,6 +61,25 @@ class AuthenticationRepository extends GetxController {
   Future<void> loginWithEmailAndPassword(String email, String password) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
+
+      final userDoc = await _db.collection('Users').where('Email', isEqualTo: email).get();
+
+      if (userDoc.docs.isNotEmpty) {
+        final fullName = userDoc.docs[0].data()['FullName'];
+
+        Get.snackbar(
+          'Accesso effettuato',
+          'Bentornato $fullName',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green.withOpacity(0.1),
+          colorText: Colors.green,
+        );
+
+        Get.offAll(() => const Dashboard());
+      } else {
+        throw Exception('User not found');
+      }
+
     } on FirebaseAuthException catch (e) {
       final ex = SignUpWithEmailAndPasswordFailure.code(e.code);
       print('FIREBASE AUTH EXCEPTION - ${ex.message}');

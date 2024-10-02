@@ -117,12 +117,21 @@ class _DashboardState extends State<Dashboard> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: Text(textChooseModels),
+              backgroundColor: textSecondaryColor,
+              title: Text(
+                textChooseModels,
+                style: TextStyle(color: Colors.white),
+              ),
               content: SingleChildScrollView(
                 child: ListBody(
                   children: _availableModels.map((model) {
                     return CheckboxListTile(
-                      title: Text(model),
+                      title: Text(
+                        model,
+                        style: TextStyle(color: textPrimaryColor),
+                      ),
+                      activeColor: textPrimaryColor,
+                      checkColor: textSecondaryColor,
                       value: tempSelectedModels.contains(model),
                       onChanged: (bool? value) {
                         setState(() {
@@ -141,13 +150,19 @@ class _DashboardState extends State<Dashboard> {
               ),
               actions: <Widget>[
                 TextButton(
-                  child: Text(textAnnulla),
+                  child: Text(
+                    textAnnulla,
+                    style: TextStyle(color: textPrimaryColor),
+                  ),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                 ),
                 TextButton(
-                  child: Text(textOk),
+                  child: Text(
+                    textOk,
+                    style: TextStyle(color: textPrimaryColor),
+                  ),
                   onPressed: () {
                     Navigator.of(context).pop(tempSelectedModels);
                   },
@@ -319,8 +334,9 @@ class _DashboardState extends State<Dashboard> {
                                   'Model: ${message.model}',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 12,
-                                    color: Colors.black54,
+                                    fontSize: 18,
+                                    color: textPrimaryColor,
+                                    letterSpacing: 1.2,
                                   ),
                                 ),
                               Text(

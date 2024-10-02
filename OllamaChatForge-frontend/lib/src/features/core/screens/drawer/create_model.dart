@@ -44,9 +44,10 @@ class CreateModelScreen extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              const FormHeaderWidget(
+              FormHeaderWidget(
                 image: textCreateModelImage,
                 description: textCreaInfo,
+                imageHeight: 190.0,
               ),
               const CreateModelFormWidget(),
             ],
@@ -88,11 +89,21 @@ class _CreateModelFormWidgetState extends State<CreateModelFormWidget> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Info'),
-          content: Text(message),
+          title: Text(
+            'Info',
+            style: TextStyle(color: Colors.white),
+          ),
+          content: Text(
+            message,
+            style: TextStyle(color: textPrimaryColor),
+          ),
+          backgroundColor: textSecondaryColor,
           actions: <Widget>[
             TextButton(
-              child: Text('OK'),
+              child: Text(
+                'OK',
+                style: TextStyle(color: Colors.white),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -171,8 +182,12 @@ class _CreateModelFormWidgetState extends State<CreateModelFormWidget> {
           );
           CreateModelController.instance.createModel(model);
 
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(responseData['message'])),
+          Get.snackbar(
+            'Modello creato con successo',
+            'Aggiungilo ai preferiti per poterlo utilizzare',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: textSecondaryColor,
+            colorText: textPrimaryColor,
           );
 
           _resetFormFields();
@@ -271,6 +286,7 @@ class _CreateModelFormWidgetState extends State<CreateModelFormWidget> {
                 controller.isPublic.value = newValue ?? false;
               },
               controlAffinity: ListTileControlAffinity.leading,
+              activeColor: textPrimaryColor,
             )),
             const SizedBox(height: 16.0),
             SizedBox(
@@ -290,21 +306,21 @@ class _CreateModelFormWidgetState extends State<CreateModelFormWidget> {
 class FormHeaderWidget extends StatelessWidget {
   final String image;
   final String description;
+  final double imageHeight;
 
   const FormHeaderWidget({
     required this.image,
     required this.description,
+    this.imageHeight = 150.0,
   });
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
     return Column(
       children: [
         Image.asset(
           image,
-          height: size.height * 0.3,
+          height: imageHeight,
         ),
         const SizedBox(height: 16.0),
         Text(

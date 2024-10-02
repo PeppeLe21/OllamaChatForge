@@ -55,21 +55,28 @@ class _PersonalModelsState extends State<PersonalModels> {
       setState(() {
         _loadModels();
       });
-    }
 
-    Future.delayed(Duration.zero, () {
+      Get.snackbar(
+        'Modello eliminato con successo',
+        '',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: textSecondaryColor,
+        colorText: Colors.red,
+      );
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(message)),
       );
-    });
+    }
   }
+
 
   void _showDeleteDialog(BuildContext context, String modelName) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Confirm Deletion'),
+          title: Text('Conferma eliminazione'),
           content: Text('Sei sicuro di voler eliminare il modello ?'),
           actions: <Widget>[
             TextButton(
@@ -79,7 +86,7 @@ class _PersonalModelsState extends State<PersonalModels> {
               },
             ),
             TextButton(
-              child: Text('Yes'),
+              child: Text('Si'),
               onPressed: () {
                 Navigator.of(context).pop();
                 _deleteModel(context, modelName);
