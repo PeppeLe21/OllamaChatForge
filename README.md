@@ -1,122 +1,143 @@
-# OllamaChatForge
+# OllamaChatForge 🤖
 
-## ENG
+## 📖 Overview
 
-Welcome to the OllamaChatForge project! This repository contains the code for both the back-end and the front-end of the application. Below are instructions on how to set up and run the application on your local machine.
+**OllamaChatForge** is a cross-platform mobile application that allows users to **query, create, and share advanced language models (LLMs)** leveraging [Ollama](https://ollama.com) and its customization options.
+
+The project was born from the exponential growth of LLMs in natural language processing and the need to make these technologies accessible even to users without advanced technical knowledge. The goal is to make the personalization and sharing of language models as simple and intuitive as possible.
+
+### ✨ Key Features
+
+- 💬 **Chat with LLMs** — Interact with any model available in Ollama directly from the mobile app
+- 🛠️ **Create custom models** — Define system instructions, parameters, and a description to forge your own LLM
+- 🗑️ **Delete models** — Manage locally running models from a clean UI
+- 👤 **User Profiles** — Authentication via Firebase (email/password and Google Sign-In)
+- ☁️ **Cloud sync** — Model metadata stored and shared via Cloud Firestore
+
+---
+
+## 🏗️ Architecture
+
+The application follows a **client-server architecture** composed of two independent modules:
+
+```
+OllamaChatForge/
+├── OllamaChatForge-frontend/   # Flutter mobile app (Dart)
+└── OllamaChatForge-backend/    # FastAPI server (Python)
+```
+
+### Tech Stack
+
+| Layer | Technology | Purpose |
+|---|---|---|
+| **Frontend** | Dart + Flutter | Cross-platform mobile UI |
+| **Backend** | Python + FastAPI | REST API layer |
+| **LLM Engine** | Ollama | Local model inference & management |
+| **Database** | Cloud Firestore | User data & model metadata |
+| **Auth** | Firebase Auth + Google Sign-In | User authentication |
+| **Storage** | Firebase Storage | User assets (e.g. profile pictures) |
+
+---
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
-Before getting started, make sure you have the following tools installed on your system:
+Make sure you have the following tools installed:
 
-- [Ollama](https://ollama.com) (for using language models)
-- [Python](https://www.python.org/downloads/) (for running the back-end)
-- [Flutter](https://flutter.dev/docs/get-started/install) (for running the front-end)
+- [Ollama](https://ollama.com) — LLM runtime (must be running locally)
+- [Python 3.10+](https://www.python.org/downloads/) — for the backend server
+- [Flutter SDK](https://flutter.dev/docs/get-started/install) — for the mobile frontend
 
-### Ollama Installation and Setup
+---
 
-Ensure that Ollama is installed and running properly before starting the back-end of the application. This is necessary for the correct functioning of the language models within the application.
+### 1. Ollama Setup
 
-### Back-End Setup
+Install and start Ollama on your machine. Pull at least one model to use with the app:
 
-To run the back-end, you need to start the FastAPI server. Follow these steps:
+```bash
+ollama pull llama3
+```
 
-1. Navigate to the directory containing the back-end code.
-2. Install the required Python packages by running:
+Ollama will be listening at `http://localhost:11434` by default. The backend expects this address.
 
-   ```bash
-   pip install -r requirements.txt
+---
 
-3. Start the server with the following command:
-   
-   ```bash
-   python -m uvicorn ollama_api:app --host 0.0.0.0 --port 8000 --reload
-This command will start the FastAPI server at `http://0.0.0.0:8000`.
+### 2. Backend Setup
 
-#### Important Note:
+Navigate to the backend directory and install the required Python packages:
 
-To use the back-end APIs correctly, you need to modify the `api_util.dart` file in the front-end code:
+```bash
+cd OllamaChatForge-backend
+pip install -r requirements.txt
+```
 
-- Open `api_util.dart`
-- Go to line 5 and replace 'YourIP' with the IP address of your local machine.
+Start the FastAPI server:
 
-### Front-End Setup
+```bash
+python -m uvicorn ollama_api:app --host 0.0.0.0 --port 8000 --reload
+```
 
-To run the front-end of the application, you can use an emulator or build an APK to install directly on an Android device.
+The server will be available at `http://0.0.0.0:8000`.
 
-#### Running on an Emulator
+> **Note:** The server exposes the API on all network interfaces so that the mobile app can reach it from a physical device or emulator on the same network.
 
-1. Open a terminal and navigate to the front-end code directory.
-2. Ensure you have an Android emulator running or a physical device connected.
-3. Start the Flutter application by running:
-   
-   ```bash
-   flutter run
+---
 
-#### Building the APK
+### 3. Frontend Setup
 
-1. If you want to build an APK to install directly on an Android device, use the following command: 
-   ```bash
-   flutter build apk --release
+Navigate to the frontend directory:
 
-This command will generate a release version of the APK in the `build/app/outputs/flutter-apk/directory`, which you can then install on your Android device.
+```bash
+cd OllamaChatForge-frontend
+```
 
+#### ⚙️ Configure the backend IP
 
-## ITA
+Open `lib/src/utils/api_util.dart` and replace `'YourIP'` on line 5 with the **local IP address** of the machine running the backend (e.g. `192.168.1.x`).
 
-Benvenuto nel progetto OllamaChatForge! Questa repository contiene il codice sia per il back-end che per il front-end dell'applicazione. Di seguito troverai le istruzioni su come configurare ed eseguire l'applicazione sulla tua macchina locale.
+#### ▶️ Run on emulator or device
 
-### Prerequisiti
+Make sure you have an Android emulator running or a physical device connected, then:
 
-Prima di iniziare, assicurati di aver installato i seguenti strumenti sul tuo sistema:
+```bash
+flutter run
+```
 
-- [Ollama](https://ollama.com) (per l'utilizzo dei modelli linguistici)
-- [Python](https://www.python.org/downloads/) (per eseguire il back-end)
-- [Flutter](https://flutter.dev/docs/get-started/install) (per eseguire il front-end)
+#### 📦 Build a release APK
 
-### Installazione e Configurazione di Ollama
+```bash
+flutter build apk --release
+```
 
-Assicurati di aver installato Ollama e che sia in esecuzione correttamente prima di avviare il back-end dell'applicazione. Questo è necessario per il corretto funzionamento dei modelli linguistici all'interno dell'applicazione.
+The APK will be generated at:
+```
+build/app/outputs/flutter-apk/app-release.apk
+```
 
-### Configurazione del Back-End
+---
 
-Per eseguire il back-end, dovrai avviare il server FastAPI. Segui questi passaggi:
+## 📂 Project Structure
 
-1. Vai nella directory contenente il codice del back-end.
-2. Installa i pacchetti Python richiesti eseguendo:
-
-   ```bash
-   pip install -r requirements.txt
-
-3. Avvia il server con il seguente comando:
-   
-   ```bash
-   python -m uvicorn ollama_api:app --host 0.0.0.0 --port 8000 --reload
-Questo comando avvierà il server FastAPI su `http://0.0.0.0:8000`.
-
-#### Nota Importante:
-
-Per utilizzare correttamente le API del back-end, è necessario modificare il file `api_util.dart` nel codice del front-end:
-
-- Apri `api_util.dart`
-- Vai alla riga 5 e sostituisci 'YourIP' con l'indirizzo IP della tua macchina locale.
-
-### Configurazione del Front-End
-
-Per eseguire il front-end dell'applicazione, puoi utilizzare un emulatore oppure costruire un APK da installare direttamente su un dispositivo Android.
-
-#### Esecuzione su Emulatore
-
-1. Apri il terminale e naviga nella directory del codice del front-end.
-2. Assicurati di avere un emulatore Android in esecuzione o un dispositivo fisico collegato.
-3. Avvia l'applicazione Flutter eseguendo:
-   
-   ```bash
-   flutter run
-
-#### Creazione dell'APK
-
-1. Se desideri creare un APK da installare direttamente su un dispositivo Android, utilizza il seguente comando: 
-   ```bash
-   flutter build apk --release
-
-Questo comando genererà una versione di rilascio dell'APK nella directory `build/app/outputs/flutter-apk/directory`, che potrai poi installare sul tuo dispositivo Android.
+```
+OllamaChatForge-frontend/lib/
+├── main.dart
+├── Start.dart
+├── firebase_options.dart
+└── src/
+    ├── common_widgets/       # Reusable UI components
+    ├── constants/            # App-wide constants and theme
+    ├── features/
+    │   ├── authentication/   # Login, registration, Google Sign-In
+    │   └── core/
+    │       ├── controllers/  # GetX state management
+    │       ├── models/       # Data models
+    │       └── screens/
+    │           ├── dashboard/ # Chat & model selection
+    │           ├── drawer/    # Side navigation
+    │           └── profile/   # User profile management
+    ├── manager/              # Service managers
+    ├── repository/           # Data layer (Firestore, Firebase)
+    ├── services/             # API calls and external services
+    └── utils/                # Utilities (API config, helpers)
+```
